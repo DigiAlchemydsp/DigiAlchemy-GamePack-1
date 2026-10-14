@@ -119,12 +119,15 @@ $env:PYTHONPATH    = "C:\Users\benan\Music\ELEKTRON\elekloader"
 $stock = "C:\Users\benan\Music\ELEKTRON\Digitone_and_Digitone_Keys_OS1.43.syx"
 $core  = "C:\Users\benan\Music\ELEKTRON\elekloader\mods\core-dn1\out\core-2.0a.elemod"
 
-python -m elekloader.sdk.build mods\digidoom --stock $stock
-python -m elekloader.lint  mods\digidoom\out\digidoom-0.21.elemod --stock $stock --with $core
+python -m elekloader.sdk.build mods\digidoom --stock $stock --out elemod
+python -m elekloader.lint  elemod\digidoom-0.21.elemod --stock $stock --with $core
 python -m elekloader.patch --stock $stock --mod $core `
-    --mod mods\digidoom\out\digidoom-0.21.elemod `
+    --mod elemod\digidoom-0.21.elemod `
     --out testout\test-digidoom-0.21.syx --version 0.1L
 ```
+
+`--out elemod` writes the built mod straight into `elemod/`. (Builds also drop
+a `elemod\digidoom.work\` dir, which is gitignored.)
 
 Expect `BUILT`, `OK: links as core … > digidoom …` (≈15 KB of 128 KB), and
 `WROTE` after `verified: …`.
@@ -152,13 +155,16 @@ fails to reach a live UI there too. That is why DIGIDOOM renders through
 ```
 mods/digidoom/digidoom.c   the launcher + all three games (one file)
 mods/digidoom/mod.json     the elemod manifest (ev_draw/ev_tick/ev_key, no sites)
-mods/digidoom/out/         built .elemod(s)
+elemod/                    the latest built mod (digidoom-0.21.elemod)
 testout/                   emulator screenshots (the .syx builds are gitignored)
 README.md                  this overview
 HANDOFF.md                 working handoff (state, environment, testing recipe)
 docs/GAME-MAKING.md        how to write a game on this platform (API + optimizations)
 LICENSE / NOTICE           GPL-2.0-or-later; what is (and isn't) redistributed
 ```
+
+Releases (a packaged `.zip` + the `.elemod`) live in the repo's **Releases**
+section on GitHub.
 
 ## Roadmap
 

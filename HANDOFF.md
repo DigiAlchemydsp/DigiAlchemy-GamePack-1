@@ -20,7 +20,7 @@ This file is the working handoff. Read `README.md` for the user view and
 | budget | `.run 11863` + `.bss 3096` = **~15 KB of 128 KB**; 0 `.fast` |
 | sites | **0** — subscribes to core events only (combinable with any mod) |
 | imports | none (only `core`) |
-| builds | `digidoom-0.21.elemod`, patched `test-digidoom-0.21.syx` (version `0.1L`) |
+| build | `elemod/digidoom-0.21.elemod` (the only committed mod); patched `.syx` is gitignored |
 | verified | boots to a live UI; menu opens; DOOM/INVADERS/SNAKE all launch and play |
 
 Three games behind a `MIDI+YES` **game-select menu**:
@@ -38,13 +38,16 @@ Three games behind a `MIDI+YES` **game-select menu**:
 ```
 mods/digidoom/digidoom.c   the launcher + all three games (one file, ~1000 lines)
 mods/digidoom/mod.json     the elemod manifest (ev_draw/ev_tick/ev_key, no sites)
-mods/digidoom/out/         built .elemod(s) + digidoom.work/ (objects, mod.ld)
-digidoom-0.21.elemod       a convenience copy of the latest mod
-testout/                   patched .syx + emulator screenshots + *.map.json
+elemod/                    the latest built mod (digidoom-0.21.elemod) + gitignored .work/
+testout/                   emulator screenshots (the .syx builds are gitignored)
+scripts/                   the no-firmware pre-commit hook + check script
 README.md                  user-facing overview
 docs/GAME-MAKING.md        how to write a game on this platform
 HANDOFF.md                 this file
+LICENSE / NOTICE           licence and what is (isn't) redistributed
 ```
+
+GitHub **Releases** carry the packaged `.zip` and the `.elemod`.
 
 `Smallest-Doom-rp2040/` (the RP2040 Chocolate-Doom fork) sits next to this
 folder as the *reference*, not as a build target — see §7.
@@ -73,12 +76,16 @@ $env:PYTHONPATH       = "C:\Users\benan\Music\ELEKTRON\elekloader"
 $stock = "C:\Users\benan\Music\ELEKTRON\Digitone_and_Digitone_Keys_OS1.43.syx"
 $core  = "C:\Users\benan\Music\ELEKTRON\elekloader\mods\core-dn1\out\core-2.0a.elemod"
 
-python -m elekloader.sdk.build mods\digidoom --stock $stock
-python -m elekloader.lint  mods\digidoom\out\digidoom-0.21.elemod --stock $stock --with $core
+python -m elekloader.sdk.build mods\digidoom --stock $stock --out elemod
+python -m elekloader.lint  elemod\digidoom-0.21.elemod --stock $stock --with $core
 python -m elekloader.patch --stock $stock --mod $core `
-    --mod mods\digidoom\out\digidoom-0.21.elemod `
+    --mod elemod\digidoom-0.21.elemod `
     --out testout\test-digidoom-0.21.syx --version 0.1L
 ```
+
+`--out elemod` writes the built mod straight into `elemod/` (the `.work/` dir it
+also creates is gitignored). Bump `version` in `mod.json` before a release, then
+commit the new `elemod/digidoom-<version>.elemod`.
 
 Expect `BUILT …`, `OK: links as core 2.0a > digidoom 0.21`, and `WROTE …` after
 `verified: …`. `patch` also writes `testout\test-digidoom-0.21.syx.map.json`

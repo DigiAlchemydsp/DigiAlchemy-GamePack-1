@@ -13,6 +13,9 @@ Smallest-Doom-rp2040/
 Smallest-Doom-rp2040.zip
 
 # ---- Build artifacts ------------------------------------------------------
-mods/digidoom/out/*.work/
+# The canonical, committed mod lives in elemod/. Builds (and their work dirs)
+# are ignored; copy the newest .elemod into elemod/ when releasing.
+mods/digidoom/out/
+elemod/*.work/
 *.o
 *.elf
