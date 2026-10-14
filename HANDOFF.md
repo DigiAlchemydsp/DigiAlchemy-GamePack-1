@@ -1,10 +1,12 @@
-# DIGIDOOM — handoff
+# DigiAlchemy GamePack — handoff
 
-A tiny **game launcher + three games** that run on the **Elektron Digitone mk1 /
-Digitone Keys (OS 1.43)** screen, shipped as one
-[elekloader](https://github.com/irpina/elekloader) mod.
+The **DigiAlchemy GamePack (VOL.1)** — a tiny **game launcher + three games** for
+the **Elektron Digitone mk1 / Digitone Keys (OS 1.43)** screen, shipped as one
+[elekloader](https://github.com/irpina/elekloader) mod (id `digidoom`).
 
-Latest build: **v0.21**. Built, linted, patched, and verified in **digiemu**.
+- **Repo (private):** https://github.com/DigiAlchemydsp/DigiAlchemy-GamePack-1
+- **Latest release:** **v0.21** — GitHub Releases carry a packaged `.zip` + the `.elemod`
+- **Latest build:** `elemod/digidoom-0.21.elemod` (built, linted, patched, verified in **digiemu**)
 
 This file is the working handoff. Read `README.md` for the user view and
 `docs/GAME-MAKING.md` for how to write another game on this platform.
@@ -15,6 +17,7 @@ This file is the working handoff. Read `README.md` for the user view and
 
 | | |
 |---|---|
+| name | DigiAlchemy GamePack — VOL.1 |
 | mod id / version | `digidoom` / `0.21` |
 | target | Digitone mk1 / Keys, OS 1.43 (main section sha256 `3831a477…`) |
 | budget | `.run 11863` + `.bss 3096` = **~15 KB of 128 KB**; 0 `.fast` |
@@ -22,6 +25,8 @@ This file is the working handoff. Read `README.md` for the user view and
 | imports | none (only `core`) |
 | build | `elemod/digidoom-0.21.elemod` (the only committed mod); patched `.syx` is gitignored |
 | verified | boots to a live UI; menu opens; DOOM/INVADERS/SNAKE all launch and play |
+| repo | **private** — `DigiAlchemydsp/DigiAlchemy-GamePack-1` |
+| release | `v0.21` — `DigiAlchemy-GamePack-0.21.zip` (package) + `digidoom-0.21.elemod` |
 
 Three games behind a `MIDI+YES` **game-select menu**:
 
@@ -202,7 +207,41 @@ plane, distance shading), not the code.
 
 ---
 
-## 9. Repo hygiene — never distribute firmware
+## 9. Release & packaging
+
+The repo holds **source + one committed `.elemod`**; the downloadable package
+lives on the GitHub **Releases** page.
+
+To cut the next release (`vX.Y`):
+
+1. Bump `version` in `mods/digidoom/mod.json` (e.g. `0.22`).
+2. Build straight into `elemod/` and **delete the previous one** (only the latest
+   is kept):
+   ```powershell
+   python -m elekloader.sdk.build mods\digidoom --stock $stock --out elemod
+   git rm elemod\digidoom-0.21.elemod
+   ```
+3. Lint, patch, and boot-test in digiemu (§3–§4); refresh screenshots if needed.
+4. Commit + push (`release: digidoom X.Y elemod`).
+5. Create the release with the package:
+   ```powershell
+   gh release create vX.Y elemod\digidoom-X.Y.elemod `
+       --title "DigiAlchemy GamePack vX.Y" --notes-file NOTES.md
+   gh release upload vX.Y DigiAlchemy-GamePack-X.Y.zip
+   ```
+   The package `.zip` = `digidoom-X.Y.elemod` + `README.md` (install) + `NOTICE`
+   + `LICENSE`; `NOTES.md` is the release body (requirements, build line,
+   controls, recovery, "no firmware distributed").
+
+Branding: **DigiAlchemy GamePack — VOL.1** (the README title carries `- VOL.1`).
+
+Known tooling limits: a `gh` token without the `workflow` / `delete_repo` scopes
+cannot push `.github/workflows/*` or delete the repo (so the firmware guard is a
+hook + script, and history rewrites use `--force-with-lease`).
+
+---
+
+## 10. Repo hygiene — never distribute firmware
 
 This repo ships **our** code and assets only. The flashable `.syx` is built
 locally from the user's own stock OS (`elekloader.patch`); it is **never**
@@ -225,7 +264,7 @@ tracked. Note: a `gh` token without the `workflow`/`delete_repo` scopes cannot
 push a `.github/workflows/*` file or delete the repo — that is why the guard is
 a hook + script, not CI.
 
-## 10. Reference docs
+## 11. Reference docs
 
 - `README.md` — user overview, controls, screenshots.
 - `docs/GAME-MAKING.md` — the platform API, tools and optimizations.

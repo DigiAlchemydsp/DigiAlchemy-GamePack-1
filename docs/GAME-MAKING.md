@@ -307,3 +307,31 @@ building DIGIDOOM):
 | `..\elekloader\examples\hello-marker\hello.c` | the smallest `ev_draw` mod |
 | `..\DigiScreen\mods\aba-dn\splash.s` | a full-frame overlay (present-hook technique) |
 | `..\digitone_corea\mods\digictl\digictl.c` | pages, `DN_TEXTF`, centered/scaled text, `ev_key`/`ev_enc` |
+
+---
+
+## 11. Packaging & releasing your mod
+
+An `.elemod` is a **linkable mod, not a firmware image**. Ship the `.elemod`;
+users build the `.syx` from their own stock OS.
+
+- **Build into a stable dir** so the artifact path is predictable:
+  `python -m elekloader.sdk.build MODDIR --stock STOCK.syx --out elemod` →
+  `elemod/<id>-<version>.elemod` (plus a gitignored `elemod/<id>.work/`).
+- **Bump `version`** in `mod.json` each release; keep only the **latest**
+  `.elemod` committed (delete the previous one).
+- **Never commit firmware.** `.gitignore` the `.syx` builds and keep a
+  pre-commit hook (`scripts/hooks/pre-commit`) that rejects
+  `*.syx`/`*.whx`/`*.whd` and the third-party reference tree.
+- **Package + release** (GitHub):
+  ```powershell
+  gh release create vX.Y elemod\<id>-X.Y.elemod --title "<pack> vX.Y" --notes-file NOTES.md
+  gh release upload vX.Y <pack>-X.Y.zip
+  ```
+  The package `.zip` = the `.elemod` + `README.md` (install) + `NOTICE` +
+  `LICENSE`. `NOTES.md` is the release body: requirements, the
+  `elekloader.patch` line, controls, recovery, and the "no firmware
+  distributed" statement.
+
+DIGIDOOM's own flow (branding, version bumps, `--force-with-lease`) is in
+`../HANDOFF.md` §9.

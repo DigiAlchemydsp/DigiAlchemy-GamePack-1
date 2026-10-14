@@ -17,6 +17,12 @@ get out of the way when you close the menu.
 Status: **v0.21**. Built, linted, patched, and verified in **digiemu** (boots to
 a live UI; the menu opens; all three games launch and play).
 
+**Download:** grab the latest **release** — `DigiAlchemy-GamePack-<ver>.zip`
+(the `.elemod` + install notes) or the bare `.elemod` — from
+[Releases](https://github.com/DigiAlchemydsp/DigiAlchemy-GamePack-1/releases).
+The `.elemod` is a linkable mod, not firmware; build the flashable `.syx`
+locally (see *Build* below).
+
 Launch trigger is **`MIDI+YES`** → the game-select menu:
 
 ![GAME SELECT menu](testout/m_menu.png)
