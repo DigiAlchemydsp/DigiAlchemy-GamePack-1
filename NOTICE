@@ -1,0 +1,19 @@
+# NOTICE
+
+DigiAlchemy GamePack — our own code and assets, under GPL-2.0-or-later
+(see `LICENSE`).
+
+This repository does **not** contain and does **not** redistribute:
+
+- **any Elektron firmware.** There are no stock or patched `.syx` images here.
+  The flashable image is built locally from *your own* stock OS plus the
+  `.elemod`s (`elekloader.patch`). The `.elemod` files reference firmware bytes
+  by **address and hash only** — never by value (the elekloader format's rule) —
+  so they carry no firmware.
+- the third-party **`Smallest-Doom-rp2040`** reference tree (Chocolate Doom,
+  GPL-2.0; the RP2040 port, BSD-3; and id Software shareware WAD data). It is
+  used only as a local reference and is **not** part of this pack.
+
+Product and company names (Elektron, Digitone, Digitone Keys, Doom, id Software)
+are trademarks of their respective owners. This project is unofficial and is not
+affiliated with, endorsed by, or supported by any of them.

@@ -153,10 +153,11 @@ fails to reach a live UI there too. That is why DIGIDOOM renders through
 mods/digidoom/digidoom.c   the launcher + all three games (one file)
 mods/digidoom/mod.json     the elemod manifest (ev_draw/ev_tick/ev_key, no sites)
 mods/digidoom/out/         built .elemod(s)
-testout/                   patched .syx + emulator screenshots + *.map.json
+testout/                   emulator screenshots (the .syx builds are gitignored)
 README.md                  this overview
 HANDOFF.md                 working handoff (state, environment, testing recipe)
 docs/GAME-MAKING.md        how to write a game on this platform (API + optimizations)
+LICENSE / NOTICE           GPL-2.0-or-later; what is (and isn't) redistributed
 ```
 
 ## Roadmap

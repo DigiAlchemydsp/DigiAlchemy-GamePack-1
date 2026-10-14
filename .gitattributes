@@ -1,0 +1,4 @@
+# Treat binaries as binary so git never rewrites their line endings.
+*.png binary
+*.elemod -text
+*.syx -text
