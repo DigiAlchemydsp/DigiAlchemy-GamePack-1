@@ -1,4 +1,4 @@
-# DigiAlchemy GamePack
+# DigiAlchemy GamePack - VOL.1
 
 **A pocket arcade for the Elektron Digitone mk1 / Digitone Keys (OS 1.43).**
 Three tiny games that run on the synth's 128×64 screen as one
