@@ -1,0 +1,23 @@
+{
+ "id": "digidoom",
+ "version": "0.21",
+ "title": "DIGIDOOM",
+ "category": "Games",
+ "author": "DIGIDOOM",
+ "license": "GPL-2.0-or-later",
+ "description": "A tiny game launcher for the Digitone mk1 / Keys screen (128x64, 1-bit). Press MIDI+YES for a game-select menu (arrows + YES), then play DOOM (a from-scratch DOOM-style raycaster: ordered-dither walls, billboard sprites, HUD, weapon, doors, monsters; title reads DOOM - KARL MARX EDITION), INVADERS (a very lightweight Space Invaders: a 6x4 fleet, ship, bullets, lives, score) or SNAKE (a grid snake that grows and speeds up with every dot). Redraws are gated so idle screens cost nothing. Survives the 128 KB elekloader mod budget by drawing with the firmware's own FILLRECT / VLINE / TEXTF. Not the Doom engine.",
+ "device": "digitone-mk1",
+ "os": "1.43",
+ "sources": [
+  "digidoom.c"
+ ],
+ "subscribe": [
+  {"event": "ev_draw", "fn": "digidoom_draw", "order": 60},
+  {"event": "ev_tick", "fn": "digidoom_tick", "order": 60},
+  {"event": "ev_key",  "fn": "digidoom_key",  "order": 60}
+ ],
+ "requires": ["core"],
+ "resources": {
+  "names": ["ui:DOOM overlay"]
+ }
+}

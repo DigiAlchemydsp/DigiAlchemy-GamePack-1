@@ -1,0 +1,18 @@
+# ---- Never distribute proprietary firmware -------------------------------
+# Patched Elektron OS images contain the stock OS bytes. They are built
+# locally from the user's own stock .syx and must never be committed.
+*.syx
+*.syx.json
+*.syx.map.json
+
+# ---- Third-party reference (not ours) ------------------------------------
+# The RP2040 "Smallest-Doom" tree (Chocolate Doom, GPL/BSD) and its archive,
+# including doom1.whx (id shareware WAD data). Kept next to the project as a
+# read-only reference; not part of this pack.
+Smallest-Doom-rp2040/
+Smallest-Doom-rp2040.zip
+
+# ---- Build artifacts ------------------------------------------------------
+mods/digidoom/out/*.work/
+*.o
+*.elf
