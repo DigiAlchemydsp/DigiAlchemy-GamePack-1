@@ -169,6 +169,21 @@ bullets, lives, score, win/lose); SNAKE (grid snake that grows and speeds up).
   SNAKE a border and high score.
 - **Sound**: none yet (the mod is display/UI only; the FM engine is untouched).
 
+## Repository contents (and what isn't here)
+
+This repo holds **our own code and assets**: the mod source
+(`mods/digidoom/digidoom.c`), the built `.elemod`s, the docs, and screenshots.
+It deliberately does **not** contain:
+
+- **any firmware** — no stock or patched Elektron `.syx` files. You build the
+  flashable image yourself from your own stock OS plus the `.elemod`s
+  (`elekloader.patch`), so nothing proprietary is redistributed;
+- the third-party **RP2040 "Smallest-Doom"** reference tree (Chocolate Doom /
+  id shareware) — it is only a local reference, not part of this pack.
+
+See `.gitignore`. The `.elemod` files reference firmware bytes by **address and
+hash**, never by value (the elekloader format's rule), so they carry no firmware.
+
 ## Licence
 
 GPL-2.0-or-later for our own code. Not affiliated with or endorsed by Elektron
