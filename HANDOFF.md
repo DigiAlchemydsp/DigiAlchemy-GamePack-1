@@ -195,7 +195,30 @@ plane, distance shading), not the code.
 
 ---
 
-## 9. Reference docs
+## 9. Repo hygiene — never distribute firmware
+
+This repo ships **our** code and assets only. The flashable `.syx` is built
+locally from the user's own stock OS (`elekloader.patch`); it is **never**
+committed. `.gitignore` excludes `*.syx` (+ `.json`/`.map.json`), the
+third-party `Smallest-Doom-rp2040/` tree and its archive, and build artifacts.
+`NOTICE` records what is (and isn't) redistributed.
+
+Two guards back it up:
+
+```powershell
+# one-time: enable the committed pre-commit hook
+git config core.hooksPath scripts/hooks
+
+# any time: verify nothing firmware-ish is tracked
+sh scripts/check-no-firmware.sh
+```
+
+Both fail if a `*.syx`/`*.whx`/`*.whd` file or the reference tree is ever
+tracked. Note: a `gh` token without the `workflow`/`delete_repo` scopes cannot
+push a `.github/workflows/*` file or delete the repo — that is why the guard is
+a hook + script, not CI.
+
+## 10. Reference docs
 
 - `README.md` — user overview, controls, screenshots.
 - `docs/GAME-MAKING.md` — the platform API, tools and optimizations.
